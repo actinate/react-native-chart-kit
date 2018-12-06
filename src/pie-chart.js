@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Svg, Rect, Text, G, Path } from 'react-native-svg';
+import { Svg, Rect, Text, G, Path, Circle } from 'react-native-svg';
 import AbstractChart from './abstract-chart';
 
 const Pie = require('paths-js/pie');
