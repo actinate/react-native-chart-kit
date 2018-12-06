@@ -25,12 +25,11 @@ class PieChart extends AbstractChart {
       return (
         <G key={Math.random()}>
           <Path d={c.sector.path.print()} fill={c.item.color} />
-          <Rect
-            width="5%"
-            height="13%"
+          <Circle
+            cx={8}
+            cy={8}
+            r="3%"
             fill={c.item.color}
-            rx={8}
-            ry={8}
             x={this.props.width / 2.5 - 24}
             y={
               -(this.props.height / 2.5) +
