@@ -74,7 +74,7 @@ class AbstractChart extends Component {
               this.props.chartConfig.color(0.5)
             }
           >
-            {label)}
+            {label}
           </Text>
         );
       }
