@@ -45,6 +45,23 @@ class AbstractChart extends Component {
         showHorizontalLabel === null ||
         (showHorizontalLabel && showHorizontalLabel(i, count))
       ) {
+        let label = data[0].toFixed(decimalPlaces);
+        if (count > 1) {
+          if (
+            decimalPlaces === 0 &&
+            i > 0 &&
+            i < 3 &&
+            Math.max(...data) < 3 &&
+            Math.max(...data) > 0
+          ) {
+            label = '';
+          } else {
+            label = (
+              (this.calcScaler(data) / (count - 1)) * i +
+              Math.min(...data)
+            ).toFixed(decimalPlaces);
+          }
+        }
         return (
           <Text
             key={Math.random()}
@@ -57,12 +74,7 @@ class AbstractChart extends Component {
               this.props.chartConfig.color(0.5)
             }
           >
-            {count === 1
-              ? data[0].toFixed(decimalPlaces)
-              : (
-                  (this.calcScaler(data) / (count - 1)) * i +
-                  Math.min(...data)
-                ).toFixed(decimalPlaces)}
+            {label)}
           </Text>
         );
       }
