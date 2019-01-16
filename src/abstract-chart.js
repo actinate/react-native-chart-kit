@@ -54,7 +54,7 @@ class AbstractChart extends Component {
             Math.max(...data) < 3 &&
             Math.max(...data) > 0
           ) {
-            label = '';
+            label = null;
           } else {
             label = (
               (this.calcScaler(data) / (count - 1)) * i +
@@ -62,21 +62,23 @@ class AbstractChart extends Component {
             ).toFixed(decimalPlaces);
           }
         }
-        return (
-          <Text
-            key={Math.random()}
-            x={paddingRight - yLabelsOffset}
-            textAnchor="end"
-            y={(height * 3) / 4 - ((height - paddingTop) / count) * i + 12}
-            fontSize={12}
-            fill={
-              this.props.chartConfig.labelColor ||
-              this.props.chartConfig.color(0.5)
-            }
-          >
-            {label}
-          </Text>
-        );
+        if (label !== null && label !== '') {
+          return (
+            <Text
+              key={Math.random()}
+              x={paddingRight - yLabelsOffset}
+              textAnchor="end"
+              y={(height * 3) / 4 - ((height - paddingTop) / count) * i + 12}
+              fontSize={12}
+              fill={
+                this.props.chartConfig.labelColor ||
+                this.props.chartConfig.color(0.5)
+              }
+            >
+              {label}
+            </Text>
+          );
+        }
       }
       return null;
     });
@@ -96,7 +98,10 @@ class AbstractChart extends Component {
     return labels.map((label, i) => {
       if (
         showVerticalLabel === null ||
-        (showVerticalLabel && showVerticalLabel(i, labels.length))
+        (showVerticalLabel &&
+          showVerticalLabel(i, labels.length) &&
+          label !== '' &&
+          label !== null)
       ) {
         return (
           <Text
