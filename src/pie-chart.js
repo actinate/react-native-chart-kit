@@ -22,37 +22,40 @@ class PieChart extends AbstractChart {
       return sum + item[this.props.accessor];
     }, 0);
     const slices = chart.curves.map((c, i) => {
-      return (
-        <G key={Math.random()}>
-          <Path d={c.sector.path.print()} fill={c.item.color} />
-          <Circle
-            cx={8}
-            cy={8}
-            r="3%"
-            fill={c.item.color}
-            x={this.props.width / 2.5 - 24}
-            y={
-              -(this.props.height / 2.5) +
-              ((this.props.height * 0.8) / this.props.data.length) * i +
-              12
-            }
-          />
-          <Text
-            fill={c.item.legendFontColor}
-            fontSize={c.item.legendFontSize}
-            x={this.props.width / 2.5}
-            y={
-              -(this.props.height / 2.5) +
-              ((this.props.height * 0.8) / this.props.data.length) * i +
-              12 * 2
-            }
-          >
-            {showPercentage &&
-              `${Math.round((100 / total) * c.item[this.props.accessor])}% `}
-            {c.item.name}
-          </Text>
-        </G>
-      );
+      if (c.item && c.item.name && c.item.name !== '') {
+        return (
+          <G key={Math.random()}>
+            <Path d={c.sector.path.print()} fill={c.item.color} />
+            <Circle
+              cx={8}
+              cy={8}
+              r="3%"
+              fill={c.item.color}
+              x={this.props.width / 2.5 - 24}
+              y={
+                -(this.props.height / 2.5) +
+                ((this.props.height * 0.8) / this.props.data.length) * i +
+                12
+              }
+            />
+            <Text
+              fill={c.item.legendFontColor}
+              fontSize={c.item.legendFontSize}
+              x={this.props.width / 2.5}
+              y={
+                -(this.props.height / 2.5) +
+                ((this.props.height * 0.8) / this.props.data.length) * i +
+                12 * 2
+              }
+            >
+              {showPercentage &&
+                `${Math.round((100 / total) * c.item[this.props.accessor])}% `}
+              {c.item.name}
+            </Text>
+          </G>
+        );
+      }
+      return null;
     });
     return (
       <View
